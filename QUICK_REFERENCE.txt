@@ -1,0 +1,282 @@
+╔═══════════════════════════════════════════════════════════════╗
+║                   A-ONE iOS APP - QUICK REFERENCE              ║
+║                        Cheat Sheet                             ║
+╚═══════════════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────────────┐
+│  🚀 QUICK START COMMANDS                                     │
+└─────────────────────────────────────────────────────────────┘
+
+# Install Dependencies
+flutter pub get
+
+# Generate Splash Screen
+flutter pub run flutter_native_splash:create
+
+# Run on iOS Simulator
+flutter run -d iPhone
+
+# List Available Devices
+flutter devices
+
+# Clean Build
+flutter clean
+
+# Build Release IPA
+flutter build ipa --release
+
+# Check Flutter Status
+flutter doctor -v
+
+
+┌─────────────────────────────────────────────────────────────┐
+│  ⚙️ KEY CONFIGURATION FILES                                  │
+└─────────────────────────────────────────────────────────────┘
+
+📁 lib/config/app_config.dart
+   → Website URL
+   → App name & colors
+   → Feature toggles
+   → Allowed domains
+
+📁 ios/Runner/Info.plist
+   → Bundle display name
+   → Permissions
+   → App Transport Security
+
+📁 pubspec.yaml
+   → Dependencies
+   → App version
+   → Assets
+
+
+┌─────────────────────────────────────────────────────────────┐
+│  🎨 CUSTOMIZATION QUICK GUIDE                                │
+└─────────────────────────────────────────────────────────────┘
+
+Change Website URL:
+   lib/config/app_config.dart
+   → static const String websiteUrl = 'YOUR_URL';
+
+Change App Name:
+   lib/config/app_config.dart
+   → static const String appName = 'YOUR_NAME';
+   
+   ios/Runner/Info.plist
+   → <key>CFBundleDisplayName</key>
+     <string>YOUR_NAME</string>
+
+Change App Color:
+   lib/config/app_config.dart
+   → static const int primaryColorValue = 0xFFHEXCODE;
+
+Replace Logo:
+   assets/images/logo.png (1024x1024)
+   → flutter pub run flutter_native_splash:create
+
+Set Bundle ID (Xcode):
+   Open ios/Runner.xcworkspace
+   → Runner > General > Bundle Identifier
+
+
+┌─────────────────────────────────────────────────────────────┐
+│  📱 FEATURE TOGGLES (lib/config/app_config.dart)             │
+└─────────────────────────────────────────────────────────────┘
+
+enableJavaScript               → true/false
+enableDomStorage              → true/false
+enablePullToRefresh           → true/false
+showAppBar                    → true/false
+openExternalLinksInBrowser    → true/false
+enableZoom                    → true/false
+allowMediaPlaybackWithoutGesture → true/false
+
+
+┌─────────────────────────────────────────────────────────────┐
+│  🗂️ PROJECT STRUCTURE                                        │
+└─────────────────────────────────────────────────────────────┘
+
+lib/
+├── main.dart                 # Entry point
+├── config/
+│   └── app_config.dart       # Configuration ⭐
+├── screens/
+│   ├── splash_screen.dart    # Splash
+│   └── webview_screen.dart   # Main screen
+├── services/
+│   └── connectivity_service.dart
+└── widgets/
+    ├── offline_page.dart
+    └── loading_indicator.dart
+
+ios/Runner/
+└── Info.plist               # iOS config ⭐
+
+assets/images/
+└── logo.png                 # Your logo 🖼️
+
+
+┌─────────────────────────────────────────────────────────────┐
+│  🔧 TROUBLESHOOTING                                          │
+└─────────────────────────────────────────────────────────────┘
+
+Build Fails:
+   flutter clean
+   flutter pub get
+   cd ios && pod install && cd ..
+   flutter run
+
+WebView Blank:
+   1. Check URL in app_config.dart
+   2. Check ATS in Info.plist
+   3. Test URL in Safari first
+
+Splash Not Showing:
+   flutter pub run flutter_native_splash:create
+   flutter clean && flutter run
+
+CocoaPods Error:
+   sudo gem install cocoapods
+   pod repo update
+   cd ios && pod install
+
+
+┌─────────────────────────────────────────────────────────────┐
+│  📋 APP STORE SUBMISSION CHECKLIST                           │
+└─────────────────────────────────────────────────────────────┘
+
+Before Building:
+ □ Website URL configured
+ □ App name updated
+ □ Logo replaced
+ □ Bundle ID set in Xcode
+ □ Development team selected
+ □ Tested on simulator & device
+
+Build:
+ □ flutter build ipa --release
+ □ Archive in Xcode (Product > Archive)
+ □ Distribute to App Store Connect
+
+App Store Connect:
+ □ Create app listing
+ □ Add app icons
+ □ Upload screenshots
+ □ Write description
+ □ Add privacy policy URL
+ □ Submit for review
+
+
+┌─────────────────────────────────────────────────────────────┐
+│  📊 VERSION MANAGEMENT                                       │
+└─────────────────────────────────────────────────────────────┘
+
+Update Version (pubspec.yaml):
+   version: MAJOR.MINOR.PATCH+BUILD
+   
+   Example: 1.0.0+1
+            ↓ ↓ ↓  ↓
+         Major│││  Build number
+           Minor│  
+             Patch
+
+Increment for:
+   • Bug fix:      1.0.0 → 1.0.1
+   • New feature:  1.0.0 → 1.1.0
+   • Major change: 1.0.0 → 2.0.0
+   • Build only:   1.0.0+1 → 1.0.0+2
+
+
+┌─────────────────────────────────────────────────────────────┐
+│  🔗 IMPORTANT LINKS                                          │
+└─────────────────────────────────────────────────────────────┘
+
+App Store Connect:
+   https://appstoreconnect.apple.com/
+
+Apple Developer:
+   https://developer.apple.com/
+
+App Icon Generator:
+   https://www.appicon.co/
+
+Flutter Docs:
+   https://flutter.dev/docs
+
+WebView Plugin:
+   https://pub.dev/packages/webview_flutter
+
+
+┌─────────────────────────────────────────────────────────────┐
+│  📚 DOCUMENTATION FILES                                      │
+└─────────────────────────────────────────────────────────────┘
+
+README.md                 → Complete guide (start here)
+SETUP.md                 → Quick setup instructions
+FAQ.md                   → Frequently asked questions
+TESTING_CHECKLIST.md     → Testing procedures
+IOS_BUILD_GUIDE.md       → Build & deployment
+PROJECT_OVERVIEW.md      → Project structure
+CHANGELOG.md             → Version history
+
+
+┌─────────────────────────────────────────────────────────────┐
+│  💡 PRO TIPS                                                 │
+└─────────────────────────────────────────────────────────────┘
+
+1. Always test on real device before submission
+2. Use TestFlight for beta testing
+3. Compress logo to reduce app size
+4. Use HTTPS for your website (App Store requirement)
+5. Respond to App Store reviews promptly
+6. Keep documentation updated
+7. Run 'flutter doctor' regularly
+8. Back up your signing certificates
+
+
+┌─────────────────────────────────────────────────────────────┐
+│  🎯 QUICK 2-MINUTE TEST                                      │
+└─────────────────────────────────────────────────────────────┘
+
+1. Launch app                    ✓
+2. Splash appears                ✓
+3. WebView loads                 ✓
+4. Pull to refresh works         ✓
+5. Turn off WiFi                 ✓
+6. Offline page shows            ✓
+7. Turn on WiFi                  ✓
+8. Retry works                   ✓
+
+
+┌─────────────────────────────────────────────────────────────┐
+│  ⚡ COMMON CODE SNIPPETS                                     │
+└─────────────────────────────────────────────────────────────┘
+
+Update Website URL:
+   // lib/config/app_config.dart
+   static const String websiteUrl = 'https://example.com';
+
+Add Domain to Whitelist:
+   // lib/config/app_config.dart
+   static List<String> allowedDomains = [
+     'example.com',
+     'www.example.com',
+   ];
+
+Change Splash Duration:
+   // lib/config/app_config.dart
+   static const int splashDurationSeconds = 3;
+
+Allow HTTP (Development Only):
+   <!-- ios/Runner/Info.plist -->
+   <key>NSAppTransportSecurity</key>
+   <dict>
+       <key>NSAllowsArbitraryLoads</key>
+       <true/>
+   </dict>
+
+
+╔═══════════════════════════════════════════════════════════════╗
+║  Need more help? Check README.md or FAQ.md                    ║
+║  Ready to deploy? See IOS_BUILD_GUIDE.md                      ║
+╚═══════════════════════════════════════════════════════════════╝

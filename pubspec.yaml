@@ -1,0 +1,70 @@
+name: a_one_ios_app
+description: A production-ready Flutter iOS WebView application with clean architecture
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # WebView
+  webview_flutter: ^4.4.4
+  webview_flutter_wkwebview: ^3.9.4
+  
+  # Connectivity
+  connectivity_plus: ^5.0.2
+  
+  # URL Launcher (for external links)
+  url_launcher: ^6.2.2
+  
+  # State Management
+  provider: ^6.1.1
+  
+  # Icons
+  cupertino_icons: ^1.0.6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.1
+  
+  # Native Splash Screen
+  flutter_native_splash: ^2.3.8
+
+flutter:
+  uses-material-design: true
+  
+  # Assets
+  assets:
+    - assets/images/
+
+# Native Splash Screen Configuration
+flutter_native_splash:
+  # Set your background color
+  color: "#1A1147"
+  
+  # Set your logo image path
+  image: assets/images/logo.png
+  
+  # iOS specific settings
+  ios: true
+  ios_content_mode: center
+  
+  # Android specific settings
+  android: true
+  android_gravity: center
+  
+  # Fullscreen mode
+  fullscreen: true
+  
+  # Branding (app name below logo)
+  branding: assets/images/logo.png
+  branding_mode: bottom
+  
+  # Set to true to show the splash screen until your app is ready
+  android_12:
+    color: "#1A1147"
+    image: assets/images/logo.png
