@@ -1,0 +1,82 @@
+workflows:
+  ios-unsigned:
+    name: iOS Unsigned IPA (Sideloadly)
+    # Build an unsigned .ipa that can be sideloaded onto a personal iPhone
+    # via Sideloadly / AltStore. No Apple Developer account required.
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+    environment:
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - name: Flutter version
+        script: |
+          flutter --version
+      - name: Get Flutter packages
+        script: |
+          flutter pub get
+      - name: Pod install
+        script: |
+          cd ios
+          pod install --repo-update
+          cd ..
+      - name: Flutter analyze
+        script: |
+          flutter analyze || true
+      - name: Build iOS (no codesign)
+        script: |
+          flutter build ios --release --no-codesign
+      - name: Package unsigned .ipa
+        script: |
+          set -e
+          APP_PATH="build/ios/iphoneos/Runner.app"
+          if [ ! -d "$APP_PATH" ]; then
+            echo "Runner.app not found at $APP_PATH"
+            exit 1
+          fi
+          mkdir -p build/ios/ipa/Payload
+          cp -R "$APP_PATH" build/ios/ipa/Payload/
+          cd build/ios/ipa
+          zip -qr DivyaJyotish-unsigned.ipa Payload
+          rm -rf Payload
+          ls -lh DivyaJyotish-unsigned.ipa
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - build/ios/iphoneos/Runner.app
+      - flutter_drive.log
+
+  ios-signed:
+    # OPTIONAL: Only use this workflow if you have an Apple Developer account
+    # and have uploaded an iOS distribution certificate + provisioning profile
+    # to Codemagic (Teams -> Code signing identities).
+    # Update BUNDLE_ID below and configure integrations in Codemagic UI.
+    name: iOS Signed IPA (Ad-Hoc / Development)
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+    environment:
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+      ios_signing:
+        distribution_type: development   # or: ad_hoc / app_store
+        bundle_identifier: com.example.aOneIosApp
+      vars:
+        BUNDLE_ID: "com.example.aOneIosApp"
+    scripts:
+      - name: Get Flutter packages
+        script: |
+          flutter pub get
+      - name: Pod install
+        script: |
+          cd ios && pod install --repo-update && cd ..
+      - name: Set up provisioning profiles
+        script: |
+          xcode-project use-profiles
+      - name: Build signed IPA
+        script: |
+          flutter build ipa --release \
+            --export-options-plist=/Users/builder/export_options.plist
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
