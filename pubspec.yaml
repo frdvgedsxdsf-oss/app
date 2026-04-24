@@ -34,6 +34,23 @@ dev_dependencies:
   # Native Splash Screen
   flutter_native_splash: ^2.3.8
 
+  # Launcher Icons
+  flutter_launcher_icons: ^0.13.1
+
+# Launcher Icons Configuration
+flutter_launcher_icons:
+  android: "ic_launcher"
+  ios: true
+  image_path: "assets/images/logo.png"
+  min_sdk_android: 21
+  remove_alpha_ios: true
+  background_color_ios: "#1A1147"
+  web:
+    generate: true
+    image_path: "assets/images/logo.png"
+    background_color: "#1A1147"
+    theme_color: "#1A1147"
+
 flutter:
   uses-material-design: true
   
